@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Card, Title } from "react-native-paper";
 import styled from "styled-components";
-import { View, Text, TouchableOpacity, Touchable } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { AuthorInfo } from "./small-components.js/Author.info.component";
+import { SameLineContainer } from "../utility/same-line.componenet";
 import { AntDesign } from "@expo/vector-icons";
 const PostCardContainer = styled(Card)`
   background-color: ${(props) => props.theme.colors.bg.primary};
@@ -21,46 +22,30 @@ const PostCardDescription = styled(Title)`
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-family: ${(props) => props.theme.fonts.body};
   font-weight: ${(props) => props.theme.fontWeights.medium};
+  width: 60%;
 `;
 const PostCardImage = styled(Card.Cover)`
   padding: ${(props) => props.theme.space[3]};
   background-color: ${(props) => props.theme.colors.bg.primary};
 `;
-const SameLineContainer = styled(View)`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+const Heart = styled(AntDesign)`
+  margin: 0 ${(props) => props.theme.space[2]};
 `;
+
 const HeartContainer = styled(View)`
   display: flex;
   flex-direction: row;
   margin: ${(props) => props.theme.space[2]} 0;
 `;
 
-const Heart = styled(AntDesign)`
-  margin: 0 ${(props) => props.theme.space[2]};
-`;
-
-export const PostCard = ({ recipies = {} }) => {
-  const {
-    name = "Some Recipe",
-    photos = [
-      "https://www.thespruceeats.com/thmb/qV3rWToK2GI8HQE8Djo1rYzuPfA=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/vegan-tofu-tikka-masala-recipe-3378484-hero-01-d676687a7b0a4640a55be669cba73095.jpg",
-    ],
-    description = " No Description",
-    author = {
-      authorName: "Author",
-      authorImage:
-        "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-    },
-    likes = 4,
-  } = recipies;
+export const PostCard = ({ recipies }) => {
+  const { name, photos, description, author, likes } = recipies;
   const [isFavourite, setIsFavourite] = useState(false);
   return (
     <PostCardContainer>
       <PostCardImage
         source={{
-          uri: photos[0],
+          uri: photos,
         }}
       />
       <Card.Content>

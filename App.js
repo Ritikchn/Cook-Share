@@ -1,9 +1,8 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
-import { StatusBar, StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { RecipeScreen } from "./src/components/screen/recipie.screen";
-import { PostCard } from "./src/components/Post-card.component";
-import styled, { ThemeProvider } from "styled-components";
+import { Text, View } from "react-native";
+import { SafeArea } from "./src/utility/safe-area.component";
+import { ThemeProvider } from "styled-components";
 import { theme } from "./src/components/infrastructure/theme";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -14,11 +13,7 @@ import {
   Oswald_400Regular,
 } from "@expo-google-fonts/oswald";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
-const SafeArea = styled(SafeAreaView)`
-  flex: 1;
-  padding: 10px;
-  margin-top: ${StatusBar.currentHeight}px;
-`;
+import { RecipieNavigator } from "./src/components/navigators/recipie.naviagtion.comonent";
 
 const Tab = createBottomTabNavigator();
 const TAB_ICON = {
@@ -60,7 +55,7 @@ const MyTabs = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={createScreenOptions}>
-        <Tab.Screen name="Recipies" component={RecipeScreen} />
+        <Tab.Screen name="Recipies" component={RecipieNavigator} />
         <Tab.Screen name="Add" component={AddScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
