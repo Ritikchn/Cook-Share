@@ -1,67 +1,30 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
-import { Text, View } from "react-native";
-import { SafeArea } from "./src/utility/safe-area.component";
+import { Navigation } from "./src/components/navigators";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./src/components/infrastructure/theme";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { FavouriteContextProvider } from "./src/services/favourites.context";
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 
 import {
   useFonts as useOswald,
   Oswald_400Regular,
 } from "@expo-google-fonts/oswald";
+import * as firebase from "firebase";
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
-import { RecipieNavigator } from "./src/components/navigators/recipie.naviagtion.comonent";
+import { LogBox } from "react-native";
 
-const Tab = createBottomTabNavigator();
-const TAB_ICON = {
-  Recipies: "md-restaurant",
-  Add: "md-add-circle-outline",
-  Settings: "md-person-outline",
+const firebaseConfig = {
+  apiKey: "AIzaSyDiIGzUWX3mrKeMEBR01JdInJ0YFysGIIc",
+  authDomain: "cookandsharereactnative.firebaseapp.com",
+  projectId: "cookandsharereactnative",
+  storageBucket: "cookandsharereactnative.appspot.com",
+  messagingSenderId: "706707040559",
+  appId: "1:706707040559:web:0d666ed79d648b937dd9da",
 };
-const SettingsScreen = () => {
-  return (
-    <SafeArea>
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Settings!</Text>
-      </View>
-    </SafeArea>
-  );
-};
-const AddScreen = () => {
-  return (
-    <SafeArea>
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Add!</Text>
-      </View>
-    </SafeArea>
-  );
-};
-const createScreenOptions = ({ route }) => {
-  const iconName = TAB_ICON[route.name];
-  return {
-    tabBarIcon: ({ size, color }) => (
-      <Ionicons name={iconName} size={size} color={color} />
-    ),
-    tabBarActiveTintColor: "#F90716",
-    tabBarInactiveTintColor: "gray",
-    headerShown: false,
-  };
-};
-
-const MyTabs = () => {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={createScreenOptions}>
-        <Tab.Screen name="Recipies" component={RecipieNavigator} />
-        <Tab.Screen name="Add" component={AddScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
-  );
-};
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -70,11 +33,18 @@ export default function App() {
   const [latodLoaded] = useLato({
     Lato_400Regular,
   });
+
   if (!oswaldLoaded || !latodLoaded) return null;
+
+  LogBox.ignoreLogs(["Setting a timer for a long period of time"]);
   return (
     <ThemeProvider theme={theme}>
-      <MyTabs />
-      <ExpoStatusBar style={"auto"} />
+      <AuthenticationContextProvider>
+        <FavouriteContextProvider>
+          <Navigation />
+          <ExpoStatusBar style={"auto"} />
+        </FavouriteContextProvider>
+      </AuthenticationContextProvider>
     </ThemeProvider>
   );
 }

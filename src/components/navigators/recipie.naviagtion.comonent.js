@@ -11,9 +11,9 @@ const RecipieStack = createStackNavigator();
 export const RecipieNavigator = () => {
   return (
     <RecipieStack.Navigator
-      headerMode="none"
       screenOptions={{
         ...TransitionPresets.ModalSlideFromBottomIOS,
+        headerMode: false,
       }}
     >
       <RecipieStack.Screen name="Recipie" component={RecipeScreen} />

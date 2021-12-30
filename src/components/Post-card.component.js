@@ -5,6 +5,8 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { AuthorInfo } from "./small-components.js/Author.info.component";
 import { SameLineContainer } from "../utility/same-line.componenet";
 import { AntDesign } from "@expo/vector-icons";
+import { Favourites } from "./small-components.js/Favourites.component";
+
 const PostCardContainer = styled(Card)`
   background-color: ${(props) => props.theme.colors.bg.primary};
   margin-bottom: ${(props) => props.theme.space[3]};
@@ -28,7 +30,7 @@ const PostCardImage = styled(Card.Cover)`
   padding: ${(props) => props.theme.space[3]};
   background-color: ${(props) => props.theme.colors.bg.primary};
 `;
-const Heart = styled(AntDesign)`
+const Heart = styled(View)`
   margin: 0 ${(props) => props.theme.space[2]};
 `;
 
@@ -57,13 +59,9 @@ export const PostCard = ({ recipies }) => {
           <SameLineContainer>
             <PostCardDescription>{description}</PostCardDescription>
             <HeartContainer>
-              <TouchableOpacity onPress={() => setIsFavourite(!isFavourite)}>
-                {isFavourite ? (
-                  <Heart name="heart" size={24} color="red" />
-                ) : (
-                  <Heart name="hearto" size={24} color="red" />
-                )}
-              </TouchableOpacity>
+              <Heart>
+                <Favourites recipie={recipies} />
+              </Heart>
               <Text>{likes}</Text>
             </HeartContainer>
           </SameLineContainer>
