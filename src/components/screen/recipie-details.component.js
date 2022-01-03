@@ -89,7 +89,7 @@ export const RecipieDetail = ({ route }) => {
   const recipie1 = route.params;
   const recipie = recipie1.restaurant;
   const recipieSteps = recipie.steps;
-  const [like, setLikes] = useState(recipie.likes);
+
   const ingridents = recipie.ingridents;
 
   return (
@@ -114,7 +114,6 @@ export const RecipieDetail = ({ route }) => {
                   <Heart>
                     <Favourites recipie={recipie} />
                   </Heart>
-                  <Text>{like}</Text>
                 </HeartContainer>
               </SameLineContainer>
             </SameLineContainer>

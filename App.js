@@ -3,7 +3,7 @@ import React from "react";
 import { Navigation } from "./src/components/navigators";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./src/components/infrastructure/theme";
-import { FavouriteContextProvider } from "./src/services/favourites.context";
+
 import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 
 import {
@@ -40,10 +40,8 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <AuthenticationContextProvider>
-        <FavouriteContextProvider>
-          <Navigation />
-          <ExpoStatusBar style={"auto"} />
-        </FavouriteContextProvider>
+        <Navigation />
+        <ExpoStatusBar style={"auto"} />
       </AuthenticationContextProvider>
     </ThemeProvider>
   );

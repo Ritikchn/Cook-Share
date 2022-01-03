@@ -3,6 +3,7 @@ import React from "react";
 import { RecipieNavigator } from "./recipie.naviagtion.comonent";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { FavouriteContextProvider } from "../../services/favourites.context";
 
 import { AddScreen } from "../screen/add-input.component";
 import { SettingsScreen } from "../settings/screens/settings.screen";
@@ -27,10 +28,12 @@ const createScreenOptions = ({ route }) => {
 
 export const AppNavigator = () => {
   return (
-    <Tab.Navigator screenOptions={createScreenOptions}>
-      <Tab.Screen name="Recipies" component={RecipieNavigator} />
-      <Tab.Screen name="Add" component={AddScreen} />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
-    </Tab.Navigator>
+    <FavouriteContextProvider>
+      <Tab.Navigator screenOptions={createScreenOptions}>
+        <Tab.Screen name="Recipies" component={RecipieNavigator} />
+        <Tab.Screen name="Add" component={AddScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
+      </Tab.Navigator>
+    </FavouriteContextProvider>
   );
 };

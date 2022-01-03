@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import {
   FlatList,
@@ -8,12 +8,12 @@ import {
 } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { PostCard } from "../Post-card.component";
-import { Searchbar, ActivityIndicator, Colors } from "react-native-paper";
-import { recipiesData } from "../../mocks/recipie.mocks";
+import { ActivityIndicator, Colors } from "react-native-paper";
+import { FavouriteBar } from "./favourites-bar.component";
+import { FavouritesContext } from "../../services/favourites.context";
 import { getData } from "../../api/recipies.api";
-const RecipieSearchBar = styled(Searchbar)`
-  margin: ${(props) => props.theme.sizes[1]};
-`;
+import { CustomSearchbar } from "../small-components.js/recipie-searchBar.component";
+
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
 
@@ -28,12 +28,16 @@ const RecipieList = styled(FlatList).attrs({
 
 export const RecipeScreen = ({ navigation }) => {
   const isFocused = useIsFocused();
-  useEffect(() => {
-    console.log("needed refresh");
+  useEffect(async () => {
+    newRecipie = await getData();
+    setIsLoading(false);
+    dataLength = newRecipie.length;
+    setDataArray(newRecipie);
   }, [isFocused]);
-
+  const { favourites } = useContext(FavouritesContext);
   const [dataArray, setDataArray] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isToggled, setIsToggled] = useState(false);
 
   var newRecipie = [];
   var dataLength;
@@ -47,7 +51,18 @@ export const RecipeScreen = ({ navigation }) => {
   return (
     <>
       <SafeArea>
-        <RecipieSearchBar />
+        <CustomSearchbar
+          isFavouritesToggled={isToggled}
+          onFavouritesToggle={() => {
+            setIsToggled(!isToggled);
+          }}
+        />
+        {isToggled && (
+          <FavouriteBar
+            favourites={favourites}
+            onNavigate={navigation.navigate}
+          />
+        )}
         {isLoading ? (
           <ActivityIndicator
             animating={true}

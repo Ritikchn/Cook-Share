@@ -62,7 +62,6 @@ export const PostCard = ({ recipies }) => {
               <Heart>
                 <Favourites recipie={recipies} />
               </Heart>
-              <Text>{likes}</Text>
             </HeartContainer>
           </SameLineContainer>
         </Info>
