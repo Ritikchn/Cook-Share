@@ -6,6 +6,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { FavouriteContextProvider } from "../../services/favourites.context";
 
 import { AddScreen } from "../screen/add-input.component";
+import { SettingsNavigator } from "./settings.navigator";
 import { SettingsScreen } from "../settings/screens/settings.screen";
 const Tab = createBottomTabNavigator();
 const TAB_ICON = {
@@ -32,7 +33,7 @@ export const AppNavigator = () => {
       <Tab.Navigator screenOptions={createScreenOptions}>
         <Tab.Screen name="Recipies" component={RecipieNavigator} />
         <Tab.Screen name="Add" component={AddScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="Settings" component={SettingsNavigator} />
       </Tab.Navigator>
     </FavouriteContextProvider>
   );

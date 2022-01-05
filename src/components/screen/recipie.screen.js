@@ -1,11 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import {
-  FlatList,
-  SafeAreaView,
-  StatusBar,
-  TouchableOpacity,
-} from "react-native";
+import { SafeAreaView, StatusBar, TouchableOpacity } from "react-native";
+import { RecipieList } from "./recipie-list.styles";
 import { useIsFocused } from "@react-navigation/native";
 import { PostCard } from "../Post-card.component";
 import { ActivityIndicator, Colors } from "react-native-paper";
@@ -19,12 +15,6 @@ const SafeArea = styled(SafeAreaView)`
 
   margin-top: ${StatusBar.currentHeight}px;
 `;
-
-const RecipieList = styled(FlatList).attrs({
-  contentContainerStyle: {
-    padding: 16,
-  },
-})``;
 
 export const RecipeScreen = ({ navigation }) => {
   const isFocused = useIsFocused();

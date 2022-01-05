@@ -11,7 +11,7 @@ export const FavouriteContextProvider = ({ children }) => {
   const saveFavourites = async (value, uid) => {
     try {
       const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("@favourites", jsonValue);
+      await AsyncStorage.setItem("@favourites-" + uid, jsonValue);
     } catch (e) {
       console.log(e);
     }
@@ -19,7 +19,7 @@ export const FavouriteContextProvider = ({ children }) => {
 
   const loadFavourites = async (uid) => {
     try {
-      const value = await AsyncStorage.getItem("@favourites");
+      const value = await AsyncStorage.getItem("@favourites-" + uid);
       if (value !== null) {
         setFavourites(JSON.parse(value));
       }
@@ -43,9 +43,7 @@ export const FavouriteContextProvider = ({ children }) => {
     setFavourites([...favourites, recipie]);
   };
   const remove = (recipie) => {
-    const newFavourites = favourites.filter(
-      (x) => x.placeId !== recipie.placeId
-    );
+    const newFavourites = favourites.filter((x) => x.name !== recipie.name);
     setFavourites(newFavourites);
   };
 
